@@ -30,19 +30,56 @@ from DISClib.ADT import list as lt
 from DISClib.Algorithms.Sorting import shellsort as sa
 assert cf
 
-"""
-Se define la estructura de un catálogo de videos. El catálogo tendrá dos listas, una para los videos, otra para las categorias de
-los mismos.
-"""
-
 # Construccion de modelos
+
+def newCatalog():
+    
+    catalog = {'Artist': None,
+               'Artwork': None,}
+
+    catalog['Artist'] = lt.newList('SINGED_LINKED')
+    catalog['Artwork'] = lt.newList('SINGED_LINKED')
+    return catalog
 
 # Funciones para agregar informacion al catalogo
 
+def addArtist(catalog, artist):
+    lt.addLast(catalog["Artist"],artist)    
+
+def addArtwork(catalog,artwork):
+    lt.addLast(catalog["Artwork"],artwork)
+
 # Funciones para creacion de datos
+
+def newArtist():
+    Artist = {}
+    return Artist
+
+def newArtwork():
+    Artwork = {}
+    return Artwork
 
 # Funciones de consulta
 
-# Funciones utilizadas para comparar elementos dentro de una lista
+def last3elemts(catalog):
+    #Lo hice así porque me estresé con el while que me estaba arrojando un montón de errores.
+    #Para la siguiente entrega lo tengo arreglado :D
+    lasts_artists = []
+    last_artworks = []
+    lasts_artists.append(lt.lastElement(catalog["Artist"]))
+    lt.removeLast(catalog["Artist"])
+    lasts_artists.append(lt.lastElement(catalog["Artist"]))
+    lt.removeLast(catalog["Artist"])
+    lasts_artists.append(lt.lastElement(catalog["Artist"]))
+    #Obras de arte 
+    last_artworks.append(lt.lastElement(catalog["Artwork"]))
+    lt.removeLast(catalog["Artwork"])
+    last_artworks.append(lt.lastElement(catalog["Artwork"]))
+    lt.removeLast(catalog["Artwork"])
+    last_artworks.append(lt.lastElement(catalog["Artwork"]))
+    print("Artistas: ", lasts_artists)
+    print("")
+    print("Obras de arte: ",last_artworks )
+    return lasts_artists
 
-# Funciones de ordenamiento
+# Funciones utilizadas para comparar elementos dentro de una lista
