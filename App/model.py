@@ -53,6 +53,8 @@ def addArtist(catalog, artist):
     lt.addLast(catalog["Artist"],artist)    
 
 def addArtwork(catalog,artwork):
+    if artwork["DateAcquired"] == "":
+        artwork["DateAcquired"] = "1800-01-01"
     lt.addLast(catalog["Artwork"],artwork)
 
 # Funciones para creacion de datos
@@ -100,15 +102,15 @@ def cmpArtworkByDateAcquired(artwork1, artwork2):
     #Preguntar aquí cómo es que salen los elementos artwork1/2
     #I mean, cuáles son las keys que tienen para poder hacer la comparación
     #De manera correcta y eficiente.
-    date1 = time.strptime(artwork1['elements']['DateAcquired'], "%Y-%m-%d")
-    date2 = time.strptime(artwork2['elements']['DateAcquired'], "%Y-%m-%d")
+    date1 = time.strptime(artwork1['DateAcquired'], "%Y-%m-%d")
+    date2 = time.strptime(artwork2['DateAcquired'], "%Y-%m-%d")
     return date1 < date2
 
 #Funciones de ordenamiento
 def order_artworks(catalog, size, TypeofOrder):
     #Preguntar por qué está arrojando error esta función
     #Aunque probablemente sea porque no se está cargando bien el cmpfunction
-    sb_list = lt.subList(catalog, 1, size)
+    sb_list = lt.subList(catalog["Artwork"], 1, size)
     sb_list = sb_list.copy()
     sorted_lt = None
     start = time.process_time()

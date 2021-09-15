@@ -53,10 +53,10 @@ def printMenu():
     print("1- Cargar información en el catálogo")
     print("2- Listar cronológicamente los artistas")
     print("3- Listar cronológicamente las adquisiciones")
-    print("4-Clasificar las obras de un artista por técnica")
-    print("5-Clasificar las obras por la nacionalidad de sus creadores")
-    print("6-Transportar obras de un departamento")
-    print("7-Proponer una nueva exposición en el museo")
+    print("4- Clasificar las obras de un artista por técnica")
+    print("5- Clasificar las obras por la nacionalidad de sus creadores")
+    print("6- Transportar obras de un departamento")
+    print("7- Proponer una nueva exposición en el museo")
 
 catalog = None
 
@@ -67,8 +67,8 @@ while True:
     printMenu()
     inputs = input('Seleccione una opción para continuar\n')
     if int(inputs[0]) == 1:
-        print("Ingrese la estructura de datos que desea\n")
-        print("1) ARRAY_LIST\t2)SINGLE_LINKED")
+        print("\nIngrese la estructura de datos que desea")
+        print("1) ARRAY_LIST\t2) SINGLE_LINKED")
         Option = input("Digite el número de la opción que desea: ")
         if int(Option) == 1:
             Dataestructure = "ARRAY_LIST"
@@ -88,10 +88,13 @@ while True:
         pass
 
     elif int(inputs[0]) == 3:
-        size = input("Indique el tamaño de la muestra: ")
-        TypeofOrder = int(input("Indique el tipo de ordenamiento:\n"
-                            "1) Shell Sort 2) Instertion Sort 3)Quick Sort 4)Merge Sort\n"))
-        controller.ordered_lists(catalog, size, TypeofOrder)
+        size = int(input("Indique el tamaño de la muestra: "))
+        TypeofOrder = int(input("\nIndique el tipo de ordenamiento:"
+                            " 1) Shell Sort 2) Instertion Sort 3) Quick Sort 4) Merge Sort\n"))
+        tiempo,lista=controller.ordered_lists(catalog, size, TypeofOrder)
+        print(tiempo)
+        print(lista)
+        
     else:
         sys.exit(0)
 sys.exit(0)
