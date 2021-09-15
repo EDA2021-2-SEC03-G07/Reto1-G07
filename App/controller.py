@@ -20,6 +20,7 @@
  * along withthis program.  If not, see <http://www.gnu.org/licenses/>.
  """
 
+from App.model import cmpArtworkByDateAcquired, last3elemts
 import config as cf
 import model
 import csv
@@ -30,8 +31,8 @@ El controlador se encarga de mediar entre la vista y el modelo.
 """
 
 # Inicialización del Catálogo de libros
-def initCatalog():
-    catalog = model.newCatalog()
+def initCatalog(Dataestructure):
+    catalog = model.newCatalog(Dataestructure)
     return catalog
 
 # Funciones para la carga de datos
@@ -57,5 +58,8 @@ def loadArtworks(catalog):
 #Funciones de consulta
 
 def loadLast3elements(catalog):
-    avr = model.last3elemts(catalog)
-    return avr
+    last3 = model.last3elemts(catalog)
+    return last3
+def ordered_lists(catalog, size, TypeofOrder):
+    order_lt = model.order_artworks(catalog,size,TypeofOrder)
+    return order_lt

@@ -22,6 +22,8 @@
 
 import config as cf
 import sys
+default_limit = 1000
+sys.setrecursionlimit(default_limit*10)
 import controller
 from DISClib.ADT import list as lt
 assert cf
@@ -34,11 +36,11 @@ se hace la solicitud al controlador para ejecutar la
 operación solicitada
 """
 
-def initCatalog():
+def initCatalog(Dataestructure):
     """
     Inicializa el catalogo
     """
-    return controller.initCatalog()
+    return controller.initCatalog(Dataestructure)
 
 def loadData(catalog):
     """
@@ -65,18 +67,31 @@ while True:
     printMenu()
     inputs = input('Seleccione una opción para continuar\n')
     if int(inputs[0]) == 1:
-        print("Cargando información de los archivos ....")
-        catalog = initCatalog()
+        print("Ingrese la estructura de datos que desea\n")
+        print("1) ARRAY_LIST\t2)SINGLE_LINKED")
+        Option = input("Digite el número de la opción que desea: ")
+        if int(Option) == 1:
+            Dataestructure = "ARRAY_LIST"
+            #print(Dataestructure)
+        elif int(Option) == 2:
+            Dataestructure = "SINGLE_LINKED"
+            #print(Dataestructure)
+        catalog = initCatalog(Dataestructure)
         loadData(catalog)
         print("Se cargaron exitosamente los datos")
         print("Aritistas cargados: "+ str(lt.size(catalog["Artist"])))
         print("Obras cargadas: "+ str(lt.size(catalog["Artwork"])))
-        print("Los últimos 3 son: ")
+        print("Los últimos 3 son: ")        
         controller.loadLast3elements(catalog)
 
     elif int(inputs[0]) == 2:
         pass
 
+    elif int(inputs[0]) == 3:
+        size = input("Indique el tamaño de la muestra: ")
+        TypeofOrder = int(input("Indique el tipo de ordenamiento:\n"
+                            "1) Shell Sort 2) Instertion Sort 3)Quick Sort 4)Merge Sort\n"))
+        controller.ordered_lists(catalog, size, TypeofOrder)
     else:
         sys.exit(0)
 sys.exit(0)
