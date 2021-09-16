@@ -90,8 +90,8 @@ while True:
     elif int(inputs[0]) == 3:
         size = int(input("Indique el tamaño de la muestra: "))
         TypeofOrder = int(input("\nIndique el tipo de ordenamiento:"
-                            " 1) Shell Sort 2) Instertion Sort 3) Quick Sort 4) Merge Sort\n"))
-        tiempo,lista=controller.ordered_lists(catalog, size, TypeofOrder)
+                            " 1) Shell Sort 2) Insertion Sort 3) Quick Sort 4) Merge Sort\n"))
+        tiempo,lista =controller.ordered_lists(catalog, size, TypeofOrder)
         print(tiempo)
         print(lista)
         

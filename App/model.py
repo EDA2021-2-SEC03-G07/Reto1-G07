@@ -123,5 +123,6 @@ def order_artworks(catalog, size, TypeofOrder):
     if TypeofOrder == 4:
         sorted_lt = merge.sort(sb_list, cmpArtworkByDateAcquired)
     end = time.process_time()
+    print("El tiempo fue: ")
     time_mseg = (end - start)*1000
-    return time_mseg, sorted_lt
+    return time_mseg, lt.size(sorted_lt)
