@@ -25,6 +25,7 @@
  """
 
 
+from typing import OrderedDict
 from Test.bst.test_bst import cmpfunction
 import config as cf
 from DISClib.ADT import list as lt
@@ -35,6 +36,8 @@ from DISClib.Algorithms.Sorting import mergesort as merge
 from datetime import date, datetime, timedelta
 assert cf
 import time
+from collections import OrderedDict
+
 # Construccion de modelos
 
 def newCatalog(Dataestructure):
@@ -50,6 +53,8 @@ def newCatalog(Dataestructure):
 # Funciones para agregar informacion al catalogo
 
 def addArtist(catalog, artist):
+    if artist["Nationality"] == "":
+        artist["Nationality"]= "Unknown"
     lt.addLast(catalog["Artist"],artist)    
 
 def addArtwork(catalog,artwork):
@@ -69,7 +74,7 @@ def newArtwork():
 
 # Funciones de consulta
 
-def last3elemts(catalog):
+'''def last3elemts(catalog):
     #Lo hice así porque me estresé con el while que me estaba arrojando un montón de errores.
     #Para la siguiente entrega lo tengo arreglado :D
     lasts_artists = []
@@ -96,21 +101,44 @@ def last3elemts(catalog):
     #     print("Fecha1 es menor!")
     # else:
     #     print("Fecha2 es mayor!")
-    #Si funciona! ;3
+    #Si funciona! ;3'''
+
+def last3elements(catalog):
+    last_artists = []
+    last_artworks = []
+    for i in range(-3,0):
+        last_artists.append(catalog["Artist"]["elements"][i])
+        last_artworks.append(catalog["Artwork"]["elements"][i])
+    print(last_artists)
+    print(last_artworks)
+
+def firstelement(catalog):
+    first_artist= lt.firstElement(catalog["Artist"])
+    first_artwork= lt.firstElement(catalog["Artwork"])
+    print(first_artist)
+    print(first_artwork)
+
+def last3elements_universal(catalog):
+    last_artworks = []
+    for i in range(-3,0):
+        last_artworks.append(catalog["elements"][i])
+    print(last_artworks)
+
+def firstelements_universal(catalog):
+    first_artworks = []
+    for i in range(0,3):
+        first_artworks.append(catalog["elements"][i])
+    print(first_artworks)
+
 # Funciones utilizadas para comparar elementos dentro de una lista
 def cmpArtworkByDateAcquired(artwork1, artwork2):
-    #Preguntar aquí cómo es que salen los elementos artwork1/2
-    #I mean, cuáles son las keys que tienen para poder hacer la comparación
-    #De manera correcta y eficiente.
     date1 = time.strptime(artwork1['DateAcquired'], "%Y-%m-%d")
     date2 = time.strptime(artwork2['DateAcquired'], "%Y-%m-%d")
     return date1 < date2
 
 #Funciones de ordenamiento
-def order_artworks(catalog, size, TypeofOrder):
-    #Preguntar por qué está arrojando error esta función
-    #Aunque probablemente sea porque no se está cargando bien el cmpfunction
-    sb_list = lt.subList(catalog["Artwork"], 1, size)
+def order_artworks(catalog):
+    '''sb_list = lt.subList(catalog["Artwork"], 1, size)
     sb_list = sb_list.copy()
     sorted_lt = None
     start = time.process_time()
@@ -124,4 +152,70 @@ def order_artworks(catalog, size, TypeofOrder):
         sorted_lt = merge.sort(sb_list, cmpArtworkByDateAcquired)
     end = time.process_time()
     time_mseg = (end - start)*1000
-    return time_mseg, sorted_lt
+    return time_mseg, sorted_lt'''
+    copia_catalogo= catalog["Artwork"].copy()
+    ordered_list= merge.sort(copia_catalogo, cmpArtworkByDateAcquired)
+    return ordered_list
+
+
+# requerimiento 2
+
+def artworks_in_range(catalog, inicial, final):
+    fechaini= time.strptime(inicial,"%Y-%m-%d")
+    fechafina= time.strptime(final,"%Y-%m-%d")
+    listix= lt.newList("ARRAY_LIST")
+    artwork_elements= catalog["elements"]
+    for element in range(0,lt.size(catalog)):
+        if time.strptime(artwork_elements[element]["DateAcquired"], "%Y-%m-%d") >= fechaini and time.strptime(artwork_elements[element]["DateAcquired"], "%Y-%m-%d") <= fechafina:
+            lt.addLast(listix,artwork_elements[element])
+    return listix
+
+def countpurchased(catalog):
+    artwork_elements= catalog["elements"]
+    cont= 0
+    for element in artwork_elements:
+        if element["CreditLine"].lower().find("purchase") >= 0:
+            cont+= 1
+    return cont
+
+# requerimiento 3
+def artworks_by_artist(catalog, nombre):
+    artist_elements= catalog["Artist"]["elements"]
+    for element in artist_elements:
+        if element["DisplayName"] == nombre:
+            id= element["ConstituentID"]
+
+    artwork_elements= catalog["Artwork"]["elements"]
+    listix= lt.newList("ARRAY_LIST")
+    for element in artwork_elements:
+        if element["ConstituentID"].find(id) >= 0:
+            lt.addLast(listix,element)
+
+    return listix, id, lt.size(listix)
+
+def techniquesxartist(catalog):
+    dict_techniques= {}
+    for element in catalog["elements"]:
+        if element["Medium"] not in dict_techniques.keys():
+            #lt.addLast(lista_techniques,[element["Medium"],1])
+            #lista_techniques["elements"][element["Medium"]]= 1
+            dict_techniques[element["Medium"]]= 1
+        else:
+            dict_techniques[element["Medium"]]+= 1
+    
+    totaltecnicas= len(dict_techniques)
+
+    toptechnique= max(dict_techniques,key=dict_techniques.get)
+    obrastoptechnique= max(dict_techniques.values())
+
+    return totaltecnicas, toptechnique, obrastoptechnique
+
+def obrascontecnica(catalog,tecnica):
+    artist_elements= catalog["elements"]
+    listix= lt.newList("ARRAY_LIST")
+    for element in artist_elements:
+        if element["Medium"] == tecnica:
+            lt.addLast(listix,element)
+    
+    return listix
+
