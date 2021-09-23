@@ -19,12 +19,12 @@
  * You should have received a copy of the GNU General Public License
  * along withthis program.  If not, see <http://www.gnu.org/licenses/>.
  """
-
 import config as cf
 import sys
+import controller
 default_limit = 1000
 sys.setrecursionlimit(default_limit*10)
-import controller
+
 from DISClib.ADT import list as lt
 assert cf
 
@@ -58,6 +58,11 @@ def printMenu():
     print("6- Transportar obras de un departamento")
     print("7- Proponer una nueva exposición en el museo")
 
+def PrintResults(ord_list, sample=10):
+    
+
+    pass
+
 catalog = None
 
 """
@@ -81,11 +86,12 @@ while True:
         print("Se cargaron exitosamente los datos")
         print("Aritistas cargados: "+ str(lt.size(catalog["Artist"])))
         print("Obras cargadas: "+ str(lt.size(catalog["Artwork"])))
-        print("Los últimos 3 son: ")        
-        controller.loadLast3elements(catalog)
 
     elif int(inputs[0]) == 2:
-        pass
+        rango_min = int(input("Ingrese la fecha mínima: "))
+        rango_max = int(input("Ingrese la fecha máxima: "))
+        sort_list = controller.Requerimiento_1(catalog, rango_min, rango_max)
+        print(controller.PrintResults(sort_list))
 
     elif int(inputs[0]) == 3:
         size = int(input("Indique el tamaño de la muestra: "))
@@ -94,7 +100,9 @@ while True:
         tiempo,lista =controller.ordered_lists(catalog, size, TypeofOrder)
         print(tiempo)
         print(lista)
-        
+
+    elif int(inputs[0]) == 5:
+        final = controller.Requerimiento_4(catalog)
     else:
         sys.exit(0)
 sys.exit(0)

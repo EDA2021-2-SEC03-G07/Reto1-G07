@@ -19,8 +19,7 @@
  * You should have received a copy of the GNU General Public License
  * along withthis program.  If not, see <http://www.gnu.org/licenses/>.
  """
-
-from App.model import cmpArtworkByDateAcquired, last3elemts
+from DISClib.ADT.list import lastElement
 import config as cf
 import model
 import csv
@@ -43,23 +42,29 @@ def loadData(catalog):
 
 def loadArtist(catalog):
 
-    Artistfile = cf.data_dir + 'Artists-utf8-large.csv'
+    Artistfile = cf.data_dir + 'Artists-utf8-5pct.csv'
     input_file = csv.DictReader(open(Artistfile, encoding='utf-8'))
     for Artist in input_file:
         model.addArtist(catalog, Artist)
 
 
 def loadArtworks(catalog):
-    Artworks = cf.data_dir + 'Artworks-utf8-large.csv'
+    Artworks = cf.data_dir + 'Artworks-utf8-5pct.csv'
     input_file = csv.DictReader(open(Artworks, encoding='utf-8'))
     for Artwork in input_file:
         model.addArtwork(catalog, Artwork)
 
+#Funciones de print
+def PrintResults(lista):
+    printing = model.first_last3elemts(lista)
+    return printing
 #Funciones de consulta
-
-def loadLast3elements(catalog):
-    last3 = model.last3elemts(catalog)
-    return last3
+def Requerimiento_1(catalog, rango_min, rango_max):
+    req_1 = model.Requerimiento_1(catalog, rango_min, rango_max)
+    return req_1
+def Requerimiento_4(catalog):
+    req_4 = model.Requerimiento_4(catalog)
+    return req_4
 def ordered_lists(catalog, size, TypeofOrder):
     order_lt = model.order_artworks(catalog,size,TypeofOrder)
     return order_lt
