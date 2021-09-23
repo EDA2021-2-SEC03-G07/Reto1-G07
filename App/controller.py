@@ -55,6 +55,10 @@ def loadArtworks(catalog):
     for Artwork in input_file:
         model.addArtwork(catalog, Artwork)
 
+#Funciones de print
+def PrintResults(lista):
+    printing = model.first_last3elemts(lista)
+    return printing
 #Funciones de consulta
 
 def loadLast3elements(catalog):
