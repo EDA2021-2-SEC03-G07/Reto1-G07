@@ -20,7 +20,7 @@
  * along withthis program.  If not, see <http://www.gnu.org/licenses/>.
  """
 
-from App.model import cmpArtworkByDateAcquired, last3elemts
+from App.model import artworks_by_artist, cmpArtworkByDateAcquired, last3elements
 import config as cf
 import model
 import csv
@@ -43,14 +43,14 @@ def loadData(catalog):
 
 def loadArtist(catalog):
 
-    Artistfile = cf.data_dir + 'Artists-utf8-large.csv'
+    Artistfile = cf.data_dir + 'Artists-utf8-80pct.csv'
     input_file = csv.DictReader(open(Artistfile, encoding='utf-8'))
     for Artist in input_file:
         model.addArtist(catalog, Artist)
 
 
 def loadArtworks(catalog):
-    Artworks = cf.data_dir + 'Artworks-utf8-large.csv'
+    Artworks = cf.data_dir + 'Artworks-utf8-80pct.csv'
     input_file = csv.DictReader(open(Artworks, encoding='utf-8'))
     for Artwork in input_file:
         model.addArtwork(catalog, Artwork)
@@ -58,8 +58,61 @@ def loadArtworks(catalog):
 #Funciones de consulta
 
 def loadLast3elements(catalog):
-    last3 = model.last3elemts(catalog)
+    last3 = model.last3elements(catalog)
     return last3
-def ordered_lists(catalog, size, TypeofOrder):
-    order_lt = model.order_artworks(catalog,size,TypeofOrder)
+
+def loadfirstelement(catalog):
+    first= model.firstelement(catalog)
+    return first
+
+def loadLast3_universal(catalog):
+    last3= model.last3elements_universal(catalog)
+    return last3
+
+def loadFirst_universal(catalog):
+    first= model.firstelements_universal(catalog)
+    return first
+
+# requerimiento 2
+
+def ordered_lists(catalog):
+    order_lt = model.order_artworks(catalog)
     return order_lt
+
+def load_artworks_in_range(catalog,inicial,final):
+    artworks= model.artworks_in_range(catalog,inicial,final)
+    return artworks
+
+def countpurchased(catalog):
+    num= model.countpurchased(catalog)
+    return num
+
+# requerimiento 3
+
+def artworks_by_artist(catalog, nombre):
+    list= model.artworks_by_artist(catalog,nombre)
+    return list[0]
+
+def artworks_by_artist_size(catalog, nombre):
+    info= model.artworks_by_artist(catalog,nombre)
+    return info[2]
+
+def artist_id(catalog, nombre):
+    info= model.artworks_by_artist(catalog,nombre)
+    return info[1]
+
+def numtechniquesxartist(catalog):
+    techniques= model.techniquesxartist(catalog)
+    return techniques[0]
+
+def tecnicamasusada(catalog):
+    techniques= model.techniquesxartist(catalog)
+    return techniques[1]
+
+def obrascontecnicamasusada(catalog):
+    techniques= model.techniquesxartist(catalog)
+    return techniques[2]
+
+def obrascontecnica(catalog,tecnica):
+    obras= model.obrascontecnica(catalog,tecnica)
+    return obras
