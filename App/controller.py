@@ -76,7 +76,10 @@ def loadLast3_universal(catalog):
 def loadFirst_universal(catalog):
     first= model.firstelements_universal(catalog)
     return first
-
+#Requerimiento 1
+def Requerimiento_1(catalog, rango_min, rango_max):
+    req1 = model.Requerimiento_1(catalog, rango_min, rango_max)
+    return req1
 # requerimiento 2
 
 def ordered_lists(catalog):
@@ -120,3 +123,7 @@ def obrascontecnicamasusada(catalog):
 def obrascontecnica(catalog,tecnica):
     obras= model.obrascontecnica(catalog,tecnica)
     return obras
+#Requerimiento 4
+def Requerimiento_4(catalog):
+    req_4 = model.Requerimiento_4(catalog)
+    return req_4
